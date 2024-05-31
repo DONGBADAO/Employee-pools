@@ -89,7 +89,6 @@ const QuestionDetailsPage = () => {
   }, [questionInfo]);
 
   useEffect(() => {
-    console.log(!allQuestion, updateQuestionStatus);
     if (!allQuestion || updateQuestionStatus) {
       dispatch(fetchAllQuestion());
     }
