@@ -8,7 +8,7 @@ import { fetchAllQuestion } from "../reducers/questions/questions.actions";
 import Meta from "antd/es/card/Meta";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { QUESTION_DETAILS_PAGE } from "../AppRoutes";
+import { QUESTION_DETAILS_PAGE } from "../App";
 
 const { Content } = Layout;
 

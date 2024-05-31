@@ -19,7 +19,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { LikeOutlined, UserOutlined, CheckOutlined } from "@ant-design/icons";
 import { find, includes, size, round, without, concat } from "lodash";
 import { red } from "@ant-design/colors";
-import { NOT_FOUND_PAGE } from "../AppRoutes";
+import { NOT_FOUND_PAGE } from "../App";
 
 const { Content } = Layout;
 const { Title } = Typography;

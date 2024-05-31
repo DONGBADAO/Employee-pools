@@ -9,7 +9,7 @@ import { generateUID } from "../utils/string";
 import { updateMemberInfo } from "../reducers/users/user.actions";
 import { concat } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { QUESTIONS_PAGE } from "../AppRoutes";
+import { QUESTIONS_PAGE } from "../App";
 
 const { Title } = Typography;
 

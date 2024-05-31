@@ -5,7 +5,7 @@ import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { SIGNIN_PAGE } from "../AppRoutes";
+import { SIGNIN_PAGE } from "../App";
 import { registerMember } from "../reducers/users/user.actions";
 import Title from "antd/es/typography/Title";
 

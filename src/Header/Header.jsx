@@ -7,7 +7,7 @@ import {
   LEADER_BOARD_PAGE,
   SIGNIN_PAGE,
   ADD_QUESTION_PAGE,
-} from "../AppRoutes";
+} from "../App";
 import { PoweroffOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { resetUserData } from "../reducers/users/user.actions";
