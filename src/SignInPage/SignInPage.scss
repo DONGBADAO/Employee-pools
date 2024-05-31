@@ -1,0 +1,35 @@
+.signin-container {
+  .signin-form {
+    margin: 100px auto;
+  }
+  .signin-form-forgot {
+    display: flex;
+    place-content: space-between;
+    a {
+      margin-left: 5px;
+    }
+  }
+  .signin-form-button {
+    width: 100%;
+  }
+  .ant-form {
+    width: 400px;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .ant-form-control {
+    .ant-form-item-control-input-content {
+      display: flex;
+      place-content: space-between;
+    }
+  }
+  .img-employee {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
