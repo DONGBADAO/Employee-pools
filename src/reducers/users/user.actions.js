@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  changePassword,
   getAllUser,
   getUserInfo,
   registerUser,
@@ -13,6 +14,7 @@ export const ACTION_TYPE = {
   RESET_REGISTER_DATA: "user/resetRegisterData",
   RESET_USER_DATA: "user/resetUserData",
   UPDATE_USER: "user/updateUser",
+  CHANGE_PASSWORD: "user/changePassword",
 };
 
 export const fetchUser = createAsyncThunk(
@@ -55,6 +57,14 @@ export const updateMemberInfo = createAsyncThunk(
   ACTION_TYPE.UPDATE_USER,
   async (data) => {
     const result = await updateUserInfo(data);
+    return result;
+  }
+);
+
+export const changePass = createAsyncThunk(
+  ACTION_TYPE.CHANGE_PASSWORD,
+  async (data) => {
+    const result = await changePassword(data);
     return result;
   }
 );

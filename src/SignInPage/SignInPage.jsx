@@ -5,7 +5,7 @@ import EmployeeBanner from "../images/employee-banner.png";
 import { reduce, concat } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { QUESTIONS_PAGE, SIGNUP_PAGE } from "../AppRoutes";
+import { CHANGE_PASS_PAGE, QUESTIONS_PAGE, SIGNUP_PAGE } from "../AppRoutes";
 import { useLocation } from "react-router-dom";
 import { fetchAllUser, fetchUser } from "../reducers/users/user.actions";
 import Title from "antd/es/typography/Title";
@@ -48,8 +48,8 @@ const SignInPage = () => {
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
-    <div className="signin-container">
-      <Title level={2} className="text-center mt-4">
+    <div className="signin-container pt-4">
+      <Title level={2} className="text-center">
         Employee polls
       </Title>
       <img
@@ -111,7 +111,7 @@ const SignInPage = () => {
               Or
               <Link to={SIGNUP_PAGE}>Register now!</Link>
             </div>
-            <Link className="signin-form-forgot" to={SIGNUP_PAGE}>
+            <Link className="signin-form-forgot" to={CHANGE_PASS_PAGE}>
               Forgot your password?
             </Link>
           </div>

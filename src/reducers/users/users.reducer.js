@@ -9,7 +9,8 @@ const initialState = {
   loading: false,
   user: null,
   allUser: null,
-  registerUser: null,
+  registerUserStatus: false,
+  changePassStatus: false,
   error: null,
 };
 
@@ -19,23 +20,27 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        changePassStatus: false,
+        registerUserStatus: false,
       };
-    case ACTION_PENDING(ACTION_TYPE.REGISTER_USER):
     case ACTION_PENDING(ACTION_TYPE.FETCH_USER):
+    case ACTION_PENDING(ACTION_TYPE.REGISTER_USER):
+    case ACTION_PENDING(ACTION_TYPE.CHANGE_PASSWORD):
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case ACTION_REJECTED(ACTION_TYPE.FETCH_ALL_USER):
-    case ACTION_REJECTED(ACTION_TYPE.REGISTER_USER):
     case ACTION_REJECTED(ACTION_TYPE.FETCH_USER):
+    case ACTION_REJECTED(ACTION_TYPE.REGISTER_USER):
+    case ACTION_REJECTED(ACTION_TYPE.FETCH_ALL_USER):
+    case ACTION_REJECTED(ACTION_TYPE.CHANGE_PASSWORD):
       return {
         ...state,
-        error: action.payload,
         user: null,
         allUser: null,
         loading: false,
+        error: action.payload,
       };
     case ACTION_FULFILLED(ACTION_TYPE.FETCH_ALL_USER):
       return {
@@ -47,7 +52,13 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        registerUser: action.payload,
+        registerUserStatus: true,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.CHANGE_PASSWORD):
+      return {
+        ...state,
+        loading: false,
+        changePassStatus: true,
       };
     case ACTION_FULFILLED(ACTION_TYPE.FETCH_USER): {
       if (action.payload.password === action.meta.arg.password) {

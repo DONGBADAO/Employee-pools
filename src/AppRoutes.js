@@ -8,6 +8,7 @@ export const QUESTION_DETAILS_PAGE = "/questions/:questionId";
 export const LEADER_BOARD_PAGE = "/leaderboard";
 export const ADD_QUESTION_PAGE = "/add";
 export const NOT_FOUND_PAGE = "/not-found-page";
+export const CHANGE_PASS_PAGE = "/change-pass";
 
 const SignUpPage = React.lazy(() => import("./SignUpPage/SignUpPage"));
 const SignInPage = React.lazy(() => import("./SignInPage/SignInPage"));
@@ -19,6 +20,9 @@ const QuestionDetailsPage = React.lazy(() =>
   import("./QuestionDetailsPage/QuestionDetailsPage")
 );
 const NotFoundPage = React.lazy(() => import("./NotFoundPage/NotFoundPage"));
+const ChangePassPage = React.lazy(() =>
+  import("./ChangePassPage/ChangePassPage")
+);
 const LeaderBoardPage = React.lazy(() =>
   import("./LeaderBoardPage/LeaderBoardPage")
 );
@@ -47,6 +51,7 @@ const AppRoutes = () => {
       <Route path={SIGNIN_PAGE} element={<SignInPage />} />
       <Route path={SIGNUP_PAGE} element={<SignUpPage />} />
       <Route path={NOT_FOUND_PAGE} element={<NotFoundPage />} />
+      <Route path={CHANGE_PASS_PAGE} element={<ChangePassPage />} />
     </Routes>
   );
 };

@@ -1,39 +1,50 @@
 import React, { useEffect } from "react";
-import "./SignUpPage.scss";
+import "./ChangePassPage.scss";
 import EmployeeBanner from "../images/employee-banner.png";
-import { Form, Input, Button, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, message, Select } from "antd";
+import { LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SIGNIN_PAGE } from "../AppRoutes";
-import { registerMember } from "../reducers/users/user.actions";
+import { changePass, fetchAllUser } from "../reducers/users/user.actions";
 import Title from "antd/es/typography/Title";
+import { reduce, concat } from "lodash";
 
-const SignUpPage = () => {
+const ChangePassPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const loading = useSelector((state) => state.userState?.loading);
-  const registerUserStatus = useSelector(
-    (state) => state.userState?.registerUserStatus
+  const allUser = useSelector((state) => state.userState?.allUser);
+  const changePassStatus = useSelector(
+    (state) => state.userState?.changePassStatus
   );
   const error = useSelector((state) => state.userState?.error);
 
   const onFinish = (values) => {
     const { userId, password } = values;
-    dispatch(registerMember({ userId, password }));
+    dispatch(changePass({ userId, password }));
   };
+
+  const filterOption = (input, option) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
+  useEffect(() => {
+    if (!allUser) {
+      dispatch(fetchAllUser());
+    }
+  }, [dispatch, allUser]);
 
   useEffect(() => {
     if (error) {
-      message.error("Sign up error!");
+      message.error("Change password error!");
     } else {
-      if (registerUserStatus) {
+      if (changePassStatus) {
         navigate(SIGNIN_PAGE);
-        message.success("Sign up successfully!");
+        message.success("Change password successfully!");
       }
     }
-  }, [dispatch, navigate, registerUserStatus, error]);
+  }, [dispatch, navigate, changePassStatus, error]);
 
   useEffect(() => {
     const isAuthenticated = !!sessionStorage.getItem("sessionLogin");
@@ -43,31 +54,38 @@ const SignUpPage = () => {
   }, [location, navigate]);
 
   return (
-    <div className="signup-container pt-4 pb-4">
-      <Title level={2} className="text-center">
+    <div className="change-pass-container">
+      <Title level={2} className="text-center mt-4">
         Employee polls
       </Title>
       <img
         className="img-employee "
         src={EmployeeBanner}
-        aria-label="Sign in image"
+        aria-label="Banner image"
       />
-      <Title level={3} className="text-center mt-4">
-        Sign up
-      </Title>
       <Form name="signup" layout="vertical" onFinish={onFinish}>
-        <h4 className="text-center mb-4">Create yout account</h4>
+        <h4 className="text-center mb-4">Change Password</h4>
         <Form.Item
           label="Username"
           name="userId"
-          rules={[
-            {
-              required: true,
-              message: "Please input username!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter username!" }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Username" />
+          <Select
+            showSearch
+            placeholder="Select user"
+            optionFilterProp="children"
+            filterOption={filterOption}
+            options={reduce(
+              allUser,
+              (result, user) => {
+                return concat(result || [], {
+                  value: user.id,
+                  label: user.name,
+                });
+              },
+              []
+            )}
+          />
         </Form.Item>
 
         <Form.Item
@@ -122,7 +140,7 @@ const SignUpPage = () => {
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
-            Register
+            Submit
           </Button>
         </Form.Item>
         <div className="text-sm text-center">
@@ -136,4 +154,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default ChangePassPage;

@@ -35,6 +35,20 @@ export const updateUserInfo = (data) => {
   }
 };
 
+export const changePassword = (data) => {
+  try {
+    return fetch(`${api}/users/${data.userId}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ password: data.password }),
+    })
+      .then((res) => res.json())
+      .then((data) => data);
+  } catch (error) {
+    console.error("changePassword - Error fetching data:", error);
+  }
+};
+
 export const registerUser = (data) => {
   try {
     return fetch(`${api}/users`, {
