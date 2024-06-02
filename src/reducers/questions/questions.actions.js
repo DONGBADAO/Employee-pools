@@ -7,11 +7,13 @@ import {
 } from "../../EmployeePollsAPI";
 
 export const ACTION_TYPE = {
-  FETCH_ALL_QUESTION: "questions/fetchAllQuestion",
-  FETCH_QUESTION: "questions/fetchQuestion",
+  CLEAR_ERROR: "questions/clearError",
   ADD_QUESTION: "questions/addQuestion",
+  FETCH_QUESTION: "questions/fetchQuestion",
   UPDATE_QUESTION: "questions/updateQuestion",
-  RESET_UPDATE_QUESTION_STATUS: "questions/resetUpdateQuestionStatus",
+  FETCH_ALL_QUESTION: "questions/fetchAllQuestion",
+  RESET_ADD_QUESTION_DATA: "questions/resetAddQuestionData",
+  RESET_UPDATE_QUESTION_DATA: "questions/resetUpdateQuestionData",
 };
 
 export const fetchAllQuestion = createAsyncThunk(
@@ -46,7 +48,12 @@ export const updateQuestion = createAsyncThunk(
   }
 );
 
-export const resetUpdateQuestionStatus = createAsyncThunk(
-  ACTION_TYPE.RESET_UPDATE_QUESTION_STATUS,
+export const resetUpdateQuestionData = createAsyncThunk(
+  ACTION_TYPE.RESET_UPDATE_QUESTION_DATA,
+  () => {}
+);
+
+export const resetAddQuestionData = createAsyncThunk(
+  ACTION_TYPE.RESET_ADD_QUESTION_DATA,
   () => {}
 );

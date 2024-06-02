@@ -9,19 +9,18 @@ const initialState = {
   loading: false,
   user: null,
   allUser: null,
-  registerUserStatus: false,
-  changePassStatus: false,
+  changePassInfo: null,
+  registerUserInfo: null,
   error: null,
 };
 
 const usersReducer = (state = initialState, action) => {
+  console.log(action.type);
   switch (action.type) {
     case ACTION_PENDING(ACTION_TYPE.FETCH_ALL_USER):
       return {
         ...state,
         error: null,
-        changePassStatus: false,
-        registerUserStatus: false,
       };
     case ACTION_PENDING(ACTION_TYPE.FETCH_USER):
     case ACTION_PENDING(ACTION_TYPE.REGISTER_USER):
@@ -33,32 +32,28 @@ const usersReducer = (state = initialState, action) => {
       };
     case ACTION_REJECTED(ACTION_TYPE.FETCH_USER):
     case ACTION_REJECTED(ACTION_TYPE.REGISTER_USER):
-    case ACTION_REJECTED(ACTION_TYPE.FETCH_ALL_USER):
     case ACTION_REJECTED(ACTION_TYPE.CHANGE_PASSWORD):
       return {
         ...state,
-        user: null,
-        allUser: null,
         loading: false,
-        error: action.payload,
+        error: action.payload || "System error",
       };
     case ACTION_FULFILLED(ACTION_TYPE.FETCH_ALL_USER):
       return {
         ...state,
-        loading: false,
         allUser: action.payload,
       };
     case ACTION_FULFILLED(ACTION_TYPE.REGISTER_USER):
       return {
         ...state,
         loading: false,
-        registerUserStatus: true,
+        registerUserInfo: action.payload,
       };
     case ACTION_FULFILLED(ACTION_TYPE.CHANGE_PASSWORD):
       return {
         ...state,
         loading: false,
-        changePassStatus: true,
+        changePassInfo: action.payload,
       };
     case ACTION_FULFILLED(ACTION_TYPE.FETCH_USER): {
       if (action.payload.password === action.meta.arg.password) {
@@ -74,15 +69,25 @@ const usersReducer = (state = initialState, action) => {
         loading: false,
       };
     }
-    case ACTION_TYPE.RESET_REGISTER_DATA:
-      return {
-        ...state,
-        registerUser: null,
-      };
-    case ACTION_TYPE.RESET_USER_DATA:
+    case ACTION_FULFILLED(ACTION_TYPE.RESET_USER_DATA):
       return {
         ...state,
         user: null,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.RESET_REGISTER_DATA):
+      return {
+        ...state,
+        registerUserInfo: null,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.RESET_CHANGE_PASS_DATA):
+      return {
+        ...state,
+        changePassInfo: null,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.CLEAR_ERROR):
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

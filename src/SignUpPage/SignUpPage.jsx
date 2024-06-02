@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
 import "./SignUpPage.scss";
 import EmployeeBanner from "../images/employee-banner.png";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SIGNIN_PAGE } from "../App";
-import { registerMember } from "../reducers/users/user.actions";
-import Title from "antd/es/typography/Title";
+import {
+  clearError,
+  registerMember,
+  resetRegisterData,
+} from "../reducers/users/user.actions";
+
+const { Title } = Typography;
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const loading = useSelector((state) => state.userState?.loading);
-  const registerUserStatus = useSelector(
-    (state) => state.userState?.registerUserStatus
+  const registerUserInfo = useSelector(
+    (state) => state.userState?.registerUserInfo
   );
   const error = useSelector((state) => state.userState?.error);
 
@@ -25,15 +30,23 @@ const SignUpPage = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      message.error("Sign up error!");
-    } else {
-      if (registerUserStatus) {
+    if (registerUserInfo) {
+      if (registerUserInfo.id) {
         navigate(SIGNIN_PAGE);
         message.success("Sign up successfully!");
+      } else {
+        message.success("Sign up failed!");
       }
+      dispatch(resetRegisterData());
     }
-  }, [dispatch, navigate, registerUserStatus, error]);
+  }, [dispatch, navigate, registerUserInfo]);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [dispatch, error]);
 
   useEffect(() => {
     const isAuthenticated = !!sessionStorage.getItem("sessionLogin");

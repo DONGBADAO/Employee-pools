@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./AddQuestionPage.scss";
-import { Form, Input, Button, Typography, Layout } from "antd";
+import { Form, Input, Button, Typography, Layout, message } from "antd";
 import Header from "../Header/Header";
 import { Content } from "antd/es/layout/layout";
 import { useDispatch, useSelector } from "react-redux";
-import { addQuestion } from "../reducers/questions/questions.actions";
+import {
+  addQuestion,
+  resetAddQuestionData,
+} from "../reducers/questions/questions.actions";
 import { generateUID } from "../utils/string";
-import { updateMemberInfo } from "../reducers/users/user.actions";
+import { clearError, updateMemberInfo } from "../reducers/users/user.actions";
 import { concat } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { QUESTIONS_PAGE } from "../App";
@@ -18,8 +21,9 @@ const AddQuestionPage = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const loading = useSelector((state) => state.questionsState.loading);
-  const addQuestionStatus = useSelector(
-    (state) => state.questionsState.addQuestionStatus
+  const error = useSelector((state) => state.questionsState.error);
+  const addQuestionInfo = useSelector(
+    (state) => state.questionsState.addQuestionInfo
   );
 
   const onFinish = (values) => {
@@ -55,10 +59,22 @@ const AddQuestionPage = () => {
   }, []);
 
   useEffect(() => {
-    if (addQuestionStatus) {
-      navigate(QUESTIONS_PAGE);
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
     }
-  }, [addQuestionStatus, navigate]);
+  }, [dispatch, error]);
+
+  useEffect(() => {
+    if (addQuestionInfo) {
+      if (addQuestionInfo) {
+        navigate(QUESTIONS_PAGE);
+      } else {
+        message.error("Add question failed!");
+      }
+      dispatch(resetAddQuestionData());
+    }
+  }, [addQuestionInfo, dispatch, navigate]);
 
   return (
     <Layout className="add-question">

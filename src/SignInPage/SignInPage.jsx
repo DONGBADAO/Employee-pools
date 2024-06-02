@@ -7,7 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { CHANGE_PASS_PAGE, QUESTIONS_PAGE, SIGNUP_PAGE } from "../App";
 import { useLocation } from "react-router-dom";
-import { fetchAllUser, fetchUser } from "../reducers/users/user.actions";
+import {
+  clearError,
+  fetchAllUser,
+  fetchUser,
+  resetUserData,
+} from "../reducers/users/user.actions";
 
 const { Title } = Typography;
 
@@ -15,6 +20,7 @@ const SignInPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const error = useSelector((state) => state.userState.error);
   const userInfo = useSelector((state) => state.userState.user);
   const loading = useSelector((state) => state.userState.loading);
   const allUser = useSelector((state) => state.userState.allUser);
@@ -30,9 +36,17 @@ const SignInPage = () => {
         navigate(QUESTIONS_PAGE);
       } else {
         message.error("Login failled!");
+        dispatch(resetUserData());
       }
     }
-  }, [navigate, userInfo]);
+  }, [dispatch, navigate, userInfo]);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [dispatch, error]);
 
   useEffect(() => {
     dispatch(fetchAllUser());

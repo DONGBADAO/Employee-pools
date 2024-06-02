@@ -9,10 +9,12 @@ import {
 
 export const ACTION_TYPE = {
   FETCH_USER: "user/fetchUser",
-  FETCH_ALL_USER: "user/fetchAllUser",
   REGISTER_USER: "user/registerUser",
-  RESET_REGISTER_DATA: "user/resetRegisterData",
+  FETCH_ALL_USER: "user/fetchAllUser",
   RESET_USER_DATA: "user/resetUserData",
+  RESET_REGISTER_DATA: "user/resetRegisterData",
+  RESET_CHANGE_PASS_DATA: "user/resetChangePassData",
+  CLEAR_ERROR: "user/clearError",
   UPDATE_USER: "user/updateUser",
   CHANGE_PASSWORD: "user/changePassword",
 };
@@ -73,6 +75,13 @@ export const resetRegisterData = createAsyncThunk(
   ACTION_TYPE.RESET_REGISTER_DATA,
   () => {}
 );
+
+export const resetChangePassData = createAsyncThunk(
+  ACTION_TYPE.RESET_CHANGE_PASS_DATA,
+  () => {}
+);
+
+export const clearError = createAsyncThunk(ACTION_TYPE.CLEAR_ERROR, () => {});
 
 export const resetUserData = createAsyncThunk(
   ACTION_TYPE.RESET_USER_DATA,

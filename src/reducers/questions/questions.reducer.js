@@ -10,8 +10,8 @@ const initialState = {
   loading: false,
   allQuestion: null,
   question: null,
-  addQuestionStatus: false,
-  updateQuestionStatus: false,
+  addQuestionInfo: null,
+  updateQuestionInfo: null,
   error: null,
 };
 
@@ -25,8 +25,6 @@ const questionsReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: true,
-        addQuestionStatus: false,
-        updateQuestionStatus: false,
       };
     case ACTION_REJECTED(ACTION_TYPE.FETCH_ALL_QUESTION):
     case ACTION_REJECTED(ACTION_TYPE.FETCH_QUESTION):
@@ -34,12 +32,8 @@ const questionsReducer = (state = initialState, action) => {
     case ACTION_REJECTED(ACTION_TYPE.UPDATE_QUESTION):
       return {
         ...state,
-        updateQuestionStatus: null,
-        addQuestionStatus: null,
-        error: action.payload,
-        allQuestion: null,
-        question: null,
         loading: false,
+        error: action.payload || "System error",
       };
     case ACTION_FULFILLED(ACTION_TYPE.FETCH_ALL_QUESTION): {
       const newQuestionData = reduce(
@@ -72,18 +66,28 @@ const questionsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        addQuestionStatus: !!action.payload,
+        addQuestionInfo: action.payload,
       };
     case ACTION_FULFILLED(ACTION_TYPE.UPDATE_QUESTION):
       return {
         ...state,
         loading: false,
-        updateQuestionStatus: true,
+        updateQuestionInfo: action.payload,
       };
-    case ACTION_TYPE.RESET_UPDATE_QUESTION_STATUS:
+    case ACTION_FULFILLED(ACTION_TYPE.RESET_UPDATE_QUESTION_DATA):
       return {
         ...state,
-        updateQuestionStatus: false,
+        updateQuestionInfo: null,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.RESET_ADD_QUESTION_DATA):
+      return {
+        ...state,
+        addQuestionInfo: null,
+      };
+    case ACTION_FULFILLED(ACTION_TYPE.CLEAR_ERROR):
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

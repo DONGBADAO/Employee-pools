@@ -7,12 +7,14 @@ import {
   Skeleton,
   Button,
   Progress,
+  message,
 } from "antd";
 import "./QuestionDetailsPage.scss";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../Header/Header";
 import {
   fetchAllQuestion,
+  resetUpdateQuestionData,
   updateQuestion,
 } from "../reducers/questions/questions.actions";
 import { useParams, useNavigate } from "react-router-dom";
@@ -20,6 +22,7 @@ import { LikeOutlined, UserOutlined, CheckOutlined } from "@ant-design/icons";
 import { find, includes, size, round, without, concat } from "lodash";
 import { red } from "@ant-design/colors";
 import { NOT_FOUND_PAGE } from "../App";
+import { clearError } from "../reducers/users/user.actions";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -31,8 +34,9 @@ const QuestionDetailsPage = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [questionInfo, setQuestionInfo] = useState(null);
   const allQuestion = useSelector((state) => state.questionsState.allQuestion);
-  const updateQuestionStatus = useSelector(
-    (state) => state.questionsState.updateQuestionStatus
+  const error = useSelector((state) => state.questionsState.error);
+  const updateQuestionInfo = useSelector(
+    (state) => state.questionsState.updateQuestionInfo
   );
 
   const handleVote = (option) => {
@@ -84,15 +88,18 @@ const QuestionDetailsPage = () => {
   }, []);
 
   useEffect(() => {
-    if (questionInfo) {
+    if (error) {
+      message.error(error);
+      dispatch(clearError);
     }
-  }, [questionInfo]);
+  }, [dispatch, error]);
 
   useEffect(() => {
-    if (!allQuestion || updateQuestionStatus) {
+    if (!allQuestion || updateQuestionInfo) {
       dispatch(fetchAllQuestion());
+      dispatch(resetUpdateQuestionData());
     }
-  }, [allQuestion, updateQuestionStatus, dispatch]);
+  }, [allQuestion, updateQuestionInfo, dispatch]);
 
   return (
     <Layout className="question-details-page">

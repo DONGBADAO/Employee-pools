@@ -37,8 +37,8 @@ const Header = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem("sessionLogin");
-    navigate(SIGNIN_PAGE);
     dispatch(resetUserData());
+    setTimeout(() => navigate(SIGNIN_PAGE), 100);
   };
 
   useEffect(() => {

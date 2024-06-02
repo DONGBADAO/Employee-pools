@@ -6,7 +6,12 @@ import { LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SIGNIN_PAGE } from "../App";
-import { changePass, fetchAllUser } from "../reducers/users/user.actions";
+import {
+  changePass,
+  clearError,
+  fetchAllUser,
+  resetChangePassData,
+} from "../reducers/users/user.actions";
 import Title from "antd/es/typography/Title";
 import { reduce, concat } from "lodash";
 
@@ -16,8 +21,8 @@ const ChangePassPage = () => {
   const location = useLocation();
   const loading = useSelector((state) => state.userState?.loading);
   const allUser = useSelector((state) => state.userState?.allUser);
-  const changePassStatus = useSelector(
-    (state) => state.userState?.changePassStatus
+  const changePassInfo = useSelector(
+    (state) => state.userState?.changePassInfo
   );
   const error = useSelector((state) => state.userState?.error);
 
@@ -36,15 +41,23 @@ const ChangePassPage = () => {
   }, [dispatch, allUser]);
 
   useEffect(() => {
-    if (error) {
-      message.error("Change password error!");
-    } else {
-      if (changePassStatus) {
+    if (changePassInfo) {
+      if (changePassInfo.id) {
         navigate(SIGNIN_PAGE);
         message.success("Change password successfully!");
+      } else {
+        message.success("Change password failed!");
       }
+      dispatch(resetChangePassData());
     }
-  }, [dispatch, navigate, changePassStatus, error]);
+  }, [dispatch, navigate, changePassInfo]);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [dispatch, error]);
 
   useEffect(() => {
     const isAuthenticated = !!sessionStorage.getItem("sessionLogin");
