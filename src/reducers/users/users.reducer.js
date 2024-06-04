@@ -15,7 +15,6 @@ const initialState = {
 };
 
 const usersReducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case ACTION_PENDING(ACTION_TYPE.FETCH_ALL_USER):
       return {

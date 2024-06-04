@@ -5,12 +5,12 @@ import { Form, Input, Button, message, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { SIGNIN_PAGE } from "../App";
 import {
   clearError,
   registerMember,
   resetRegisterData,
 } from "../reducers/users/user.actions";
+import { SIGNIN_PAGE } from "../constant";
 
 const { Title } = Typography;
 
@@ -18,11 +18,11 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const loading = useSelector((state) => state.userState?.loading);
+  const loading = useSelector((state) => state.userState.loading);
   const registerUserInfo = useSelector(
-    (state) => state.userState?.registerUserInfo
+    (state) => state.userState.registerUserInfo
   );
-  const error = useSelector((state) => state.userState?.error);
+  const error = useSelector((state) => state.userState.error);
 
   const onFinish = (values) => {
     const { userId, password } = values;

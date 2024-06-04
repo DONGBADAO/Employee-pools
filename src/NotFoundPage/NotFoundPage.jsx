@@ -1,7 +1,7 @@
 import { Result, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./NotFoundPage.scss";
-import { QUESTIONS_PAGE } from "../App";
+import { QUESTIONS_PAGE } from "../constant";
 
 const NotFoundPage = () => {
   const navigate = useNavigate();

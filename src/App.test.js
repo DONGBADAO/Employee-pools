@@ -1,29 +1,52 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import SignInPage from "./SignInPage/SignInPage";
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import App from "./App";
+import { QUESTIONS_PAGE } from "./constant";
 
-jest.mock("antd", () => ({
-  Select: ({ children, onChange, value }) => (
-    <select onChange={onChange} value={value}>
-      {children}
-    </select>
-  ),
-}));
+jest.mock("./QuestionsPage/QuestionsPage", () => () => (
+  <div>Questions Page</div>
+));
+jest.mock("./SignInPage/SignInPage", () => () => <div>Sign In Page</div>);
+jest.mock("./SignUpPage/SignUpPage", () => () => <div>Sign Up Page</div>);
 
-jest.mock('antd', () => ({
-  Typography: {
-    Title: ({ children }) => <div>{children}</div>, 
-  },
-}));
+describe("App", () => {
+  const mockSessionStorage = (isAuthenticated) => {
+    Object.defineProperty(window, "sessionStorage", {
+      value: {
+        getItem: jest.fn(() => (isAuthenticated ? "sessionLogin" : null)),
+        setItem: jest.fn(),
+        removeItem: jest.fn(),
+        clear: jest.fn(),
+      },
+      writable: true,
+    });
+  };
 
-// test("renders learn react link", () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-test("displays error message for invalid credentials", async () => {
-  render(<SignInPage />);
-  const usernameElement = screen.getByLabelText("Username");
-  fireEvent.change(usernameElement, { target: { value: "donglb1" } });
-  expect(usernameElement.value).toBe("donglb1");
+  it("renders QuestionsPage when authenticated", async () => {
+    mockSessionStorage(true);
+    render(
+      <MemoryRouter initialEntries={[QUESTIONS_PAGE]}>
+        <App />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.findByText("Questions Page"));
+    expect(screen.getByText("Questions Page")).toBeInTheDocument();
+  });
+
+  it("redirects to SignInPage when not authenticated", async () => {
+    mockSessionStorage(false);
+    render(
+      <MemoryRouter initialEntries={[QUESTIONS_PAGE]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => screen.findByText("Sign In Page"));
+    expect(screen.getByText("Sign In Page")).toBeInTheDocument();
+  });
 });

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./AddQuestionPage.scss";
 import { Form, Input, Button, Typography, Layout, message } from "antd";
 import Header from "../Header/Header";
-import { Content } from "antd/es/layout/layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addQuestion,
@@ -12,9 +11,10 @@ import { generateUID } from "../utils/string";
 import { clearError, updateMemberInfo } from "../reducers/users/user.actions";
 import { concat } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { QUESTIONS_PAGE } from "../App";
+import { QUESTIONS_PAGE } from "../constant";
 
 const { Title } = Typography;
+const { Content } = Layout;
 
 const AddQuestionPage = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const AddQuestionPage = () => {
 
   useEffect(() => {
     if (addQuestionInfo) {
-      if (addQuestionInfo) {
+      if (addQuestionInfo.id) {
         navigate(QUESTIONS_PAGE);
       } else {
         message.error("Add question failed!");

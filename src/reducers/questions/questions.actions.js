@@ -36,6 +36,7 @@ export const addQuestion = createAsyncThunk(
   ACTION_TYPE.ADD_QUESTION,
   async (question) => {
     const result = await addNewQuestion(question);
+    console.log('qưqwqwq', result);
     return result;
   }
 );

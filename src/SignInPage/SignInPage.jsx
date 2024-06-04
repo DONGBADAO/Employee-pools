@@ -5,7 +5,7 @@ import EmployeeBanner from "../images/employee-banner.png";
 import { reduce, concat } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CHANGE_PASS_PAGE, QUESTIONS_PAGE, SIGNUP_PAGE } from "../App";
+import { CHANGE_PASS_PAGE, QUESTIONS_PAGE, SIGNUP_PAGE } from "../constant";
 import { useLocation } from "react-router-dom";
 import {
   clearError,

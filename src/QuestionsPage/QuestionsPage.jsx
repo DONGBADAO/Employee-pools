@@ -8,7 +8,7 @@ import { fetchAllQuestion } from "../reducers/questions/questions.actions";
 import Meta from "antd/es/card/Meta";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { QUESTION_DETAILS_PAGE } from "../App";
+import { QUESTION_DETAILS_PAGE } from "../constant";
 
 const { Content } = Layout;
 
@@ -42,75 +42,75 @@ const QuestionsPage = () => {
     <Layout className="questions-page">
       <Header />
       <Content className="p-4">
-        <Card
-          title="New Questions"
-          className={`card-wrap ${isEmpty(newQuestion) ? "no-data" : ""}`}
-        >
-          {isNull(newQuestion) ? (
-            <Skeleton />
-          ) : !isEmpty(newQuestion) ? (
-            map(newQuestion, (questions) => {
-              const { questionId, author, timestamp } = questions;
-              const date = new Date(timestamp);
-              const formatedDate = format(date, "hh:mm a | MM/dd/yyyy");
-              return (
-                <Card
-                  key={questionId}
-                  className="text-center"
-                  actions={[
-                    <Button
-                      type="primary"
-                      ghost
-                      key="show"
-                      onClick={() => showQuestionDetails(questionId)}
-                    >
-                      Show
-                    </Button>,
-                  ]}
-                >
-                  <Meta title={author} description={formatedDate} />
-                </Card>
-              );
-            })
-          ) : (
-            <p className="text-center">There are no new questions.</p>
-          )}
-        </Card>
-        <Card
-          title="Done"
-          className={`card-wrap ${isEmpty(doneQuestion) ? "no-data" : ""}`}
-        >
-          {isNull(doneQuestion) ? (
-            <Skeleton />
-          ) : !isEmpty(doneQuestion) ? (
-            map(doneQuestion, (question) => {
-              const { questionId, author, timestamp } = question;
-              const date = new Date(timestamp);
-              const formatedDate = format(date, "hh:mm a | MM/dd/yyyy");
-              return (
-                <Card
-                  key={questionId}
-                  className="text-center"
-                  actions={[
-                    <Button
-                      type="primary"
-                      ghost
-                      key="show"
-                      onClick={() => showQuestionDetails(questionId)}
-                    >
-                      Show
-                    </Button>,
-                  ]}
-                >
-                  <Meta title={author} description={formatedDate} />
-                </Card>
-              );
-            })
-          ) : (
-            <p className="text-center">There are no new questions.</p>
-          )}
-        </Card>
-      </Content>
+      <Card
+        title="New Questions"
+        className={`card-wrap ${isEmpty(newQuestion) ? "no-data" : ""}`}
+      >
+        {isNull(newQuestion) ? (
+          <Skeleton />
+        ) : !isEmpty(newQuestion) ? (
+          map(newQuestion, (questions) => {
+            const { questionId, author, timestamp } = questions;
+            const date = new Date(timestamp);
+            const formatedDate = format(date, "hh:mm a | MM/dd/yyyy");
+            return (
+              <Card
+                key={questionId}
+                className="text-center"
+                actions={[
+                  <Button
+                    type="primary"
+                    ghost
+                    key="show"
+                    onClick={() => showQuestionDetails(questionId)}
+                  >
+                    Show
+                  </Button>,
+                ]}
+              >
+                <Meta title={author} description={formatedDate} />
+              </Card>
+            );
+          })
+        ) : (
+          <p className="text-center">There are no new questions.</p>
+        )}
+      </Card>
+      <Card
+        title="Done"
+        className={`card-wrap ${isEmpty(doneQuestion) ? "no-data" : ""}`}
+      >
+        {isNull(doneQuestion) ? (
+          <Skeleton />
+        ) : !isEmpty(doneQuestion) ? (
+          map(doneQuestion, (question) => {
+            const { questionId, author, timestamp } = question;
+            const date = new Date(timestamp);
+            const formatedDate = format(date, "hh:mm a | MM/dd/yyyy");
+            return (
+              <Card
+                key={questionId}
+                className="text-center"
+                actions={[
+                  <Button
+                    type="primary"
+                    ghost
+                    key="show"
+                    onClick={() => showQuestionDetails(questionId)}
+                  >
+                    Show
+                  </Button>,
+                ]}
+              >
+                <Meta title={author} description={formatedDate} />
+              </Card>
+            );
+          })
+        ) : (
+          <p className="text-center">There are no new questions.</p>
+        )}
+      </Card>
+    </Content>
     </Layout>
   );
 };

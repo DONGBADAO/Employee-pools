@@ -1,14 +1,15 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
-
-export const QUESTIONS_PAGE = "/questions";
-export const SIGNIN_PAGE = "/sign-in";
-export const SIGNUP_PAGE = "/sign-up";
-export const QUESTION_DETAILS_PAGE = "/questions/:questionId";
-export const LEADER_BOARD_PAGE = "/leaderboard";
-export const ADD_QUESTION_PAGE = "/add";
-export const NOT_FOUND_PAGE = "/not-found-page";
-export const CHANGE_PASS_PAGE = "/change-pass";
+import {
+  ADD_QUESTION_PAGE,
+  CHANGE_PASS_PAGE,
+  LEADER_BOARD_PAGE,
+  NOT_FOUND_PAGE,
+  QUESTIONS_PAGE,
+  QUESTION_DETAILS_PAGE,
+  SIGNIN_PAGE,
+  SIGNUP_PAGE,
+} from "./constant";
 
 const SignUpPage = React.lazy(() => import("./SignUpPage/SignUpPage"));
 const SignInPage = React.lazy(() => import("./SignInPage/SignInPage"));

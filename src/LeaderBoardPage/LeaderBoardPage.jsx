@@ -72,12 +72,12 @@ const LeaderBoardPage = () => {
     <Layout className="leader-board-page">
       <Header />
       <Content className="p-4">
-        {leaderBoardData ? (
-          <Table columns={columns} dataSource={leaderBoardData} bordered />
-        ) : (
-          <Skeleton />
-        )}
-      </Content>
+      {leaderBoardData ? (
+        <Table columns={columns} dataSource={leaderBoardData} bordered />
+      ) : (
+        <Skeleton />
+      )}
+    </Content>
     </Layout>
   );
 };
