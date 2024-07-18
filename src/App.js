@@ -48,6 +48,7 @@ const App = () => {
         <Route path={LEADER_BOARD_PAGE} element={<LeaderBoardPage />} />
         <Route path={QUESTION_DETAILS_PAGE} element={<QuestionDetailsPage />} />
       </Route>
+      <Route path="/" element={<Navigate to={SIGNIN_PAGE} />} />
       <Route path="*" element={<NotFoundPage />} />
       <Route path={SIGNIN_PAGE} element={<SignInPage />} />
       <Route path={SIGNUP_PAGE} element={<SignUpPage />} />
